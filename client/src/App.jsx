@@ -14,7 +14,7 @@ function App() {
   // 🔄 Fetch todos from backend
   const getTodos = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/todos");
+      const res = await axios.get("https://todolist-app-1-2d6u.onrender.com/api/todos");
       setTodos(res.data);
     } catch (err) {
       console.error("❌ Error fetching todos:", err);

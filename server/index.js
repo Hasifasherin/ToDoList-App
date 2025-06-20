@@ -2,16 +2,16 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 5000; // ✅ Required for Render
+const PORT = process.env.PORT || 5000; // ✅ Dynamic port for Render
 
-// Middlewares
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// 🔸 In-memory data store
+// 🔸 In-memory todo store
 let todos = [];
 
-// ✅ Root route to fix "Cannot GET /"
+// ✅ Root Route (for Render & general status check)
 app.get("/", (req, res) => {
   res.send(`
     <html>
@@ -35,13 +35,13 @@ app.get("/api/todos", (req, res) => {
 app.post("/api/todos", (req, res) => {
   const { text } = req.body;
   if (!text) {
-    console.log("❌ [POST] Text missing");
+    console.log("❌ [POST] Missing todo text");
     return res.status(400).json({ error: "Text is required" });
   }
 
   const newTodo = { id: Date.now(), text };
   todos.push(newTodo);
-  console.log("✅ [POST] Added:", newTodo);
+  console.log("✅ [POST] Added todo:", newTodo);
   res.status(201).json(newTodo);
 });
 
@@ -57,7 +57,7 @@ app.put("/api/todos/:id", (req, res) => {
   }
 
   todo.text = text;
-  console.log("✏️ [PUT] Updated:", todo);
+  console.log("✏️ [PUT] Updated todo:", todo);
   res.json(todo);
 });
 
@@ -70,13 +70,13 @@ app.delete("/api/todos/:id", (req, res) => {
   if (todos.length === initialLength) {
     console.log("⚠️ [DELETE] Todo not found:", id);
   } else {
-    console.log("🗑️ [DELETE] Removed ID:", id);
+    console.log("🗑️ [DELETE] Removed todo ID:", id);
   }
 
   res.status(204).end();
 });
 
-// 🚀 Start the server
+// 🚀 Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at: http://localhost:${PORT}`);
+  console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });
