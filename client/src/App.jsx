@@ -27,13 +27,13 @@ function App() {
 
     try {
       if (editId) {
-        const res = await axios.put(`http://localhost:5000/api/todos/${editId}`, {
+        const res = await axios.put(`https://todolist-app-1-2d6u.onrender.com/api/todos/${editId}`, {
           text: input,
         });
         setTodos(todos.map((t) => (t.id === editId ? res.data : t)));
         setEditId(null);
       } else {
-        const res = await axios.post("http://localhost:5000/api/todos", {
+        const res = await axios.post("https://todolist-app-1-2d6u.onrender.com/api/todos", {
           text: input,
         });
         setTodos([...todos, res.data]);
@@ -54,7 +54,7 @@ function App() {
   // 🗑️ Delete todo
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/todos/${id}`);
+      await axios.delete(`https://todolist-app-1-2d6u.onrender.com/api/todos/${id}`);
       setTodos(todos.filter((todo) => todo.id !== id));
     } catch (err) {
       console.error("❌ Error deleting todo:", err);
